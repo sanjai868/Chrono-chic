@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="{% static 'regform.css' %}"> -->
+     <style>
+        /* General Page Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0D0D0D;
+    color: #EAEAEA;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Form Container */
+form {
+    width: 50%;
+    background-color: #1a1a1a;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #262626;
+    border: 2px solid #D4AF37;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Table Headers */
+th {
+    text-align: left;
+    padding: 12px;
+    color: #D4AF37;
+    font-size: 1.1rem;
+    background-color: #1a1a1a;
+}
+
+/* Table Data Cells */
+td {
+    padding: 12px;
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    border: 1px solid #D4AF37;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #EAEAEA;
+}
+
+/* Input Focus */
+input:focus,
+textarea:focus {
+    border-color: #E6C36D;
+    outline: none;
+}
+
+/* Gender Radio Buttons */
+input[type="radio"] {
+    margin-right: 8px;
+}
+
+/* Submit Button */
+button {
+    background-color: #D4AF37;
+    color: #0D0D0D;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 50%;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #E6C36D;
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(212, 175, 55, 0.5);
+}
+
+button:active {
+    background-color: #B8860B;
+    transform: scale(1);
+}
+
+     </style>
+</head>
+<body>
+    <form action="{% url 'regform' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+   <table border="2px">
+    <tr>
+        <th>Name</th>
+        <td><input type="text" name="name" ></td>
+    </tr>
+    <tr>
+        <th>Age</th>
+        <td><input type="number" name="age"></td>
+    </tr>
+    <tr>
+        <th>Gender</th>
+        <td><input type="radio" id="male" name="gender" value="Male">Male
+            <input type="radio" id="female" name="gender" value="Female">Female</td>
+    </tr>
+    
+    <tr>
+        <th>Email</th>
+        <td><input type="email" name="email" ></td>
+    </tr>
+    <tr>
+        <th>Phone</th>
+        <td><input type="number" name="phone" ></td>
+    </tr>
+    <tr>
+        <th>Address</th>
+        <td><textarea name="address"></textarea></td>
+    </tr>
+    <tr>
+        <th>Username</th>
+        <td><input type="text" name="username" ></td>
+    </tr>
+    <tr>
+        <th>Password</th>
+        <td><input type="password" name="password" ></td>
+    </tr>
+   </table>
+   <center><button type="submit">Register</button></center>
+
+</form>
+
+</body>
+</html>

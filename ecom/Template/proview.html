@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0D0D0D;
+    color: #EAEAEA;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 85%;
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 30px;
+    background: linear-gradient(145deg, #1a1a1a, #0e0e0e);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+}
+
+.product-view {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image {
+    flex: 1 1 350px;
+    max-width: 450px;
+}
+
+.product-image img {
+    width: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 6px 15px rgba(212, 175, 55, 0.3);
+}
+
+.product-details {
+    flex: 2 1 450px;
+}
+
+.product-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #D4AF37;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #D4AF37;
+    margin-bottom: 10px;
+}
+
+#total-price {
+    font-weight: bold;
+    color: #E6C36D;
+}
+
+.product-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #EAEAEA;
+    margin-bottom: 20px;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.quantity-control button {
+    background-color: #D4AF37;
+    color: #0D0D0D;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quantity-control button:hover {
+    background-color: #E6C36D;
+    transform: scale(1.05);
+}
+
+.quantity-control input {
+    width: 60px;
+    text-align: center;
+    border: 2px solid #D4AF37;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #1a1a1a;
+    color: #EAEAEA;
+    padding: 8px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #D4AF37;
+    color: #0D0D0D;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #E6C36D;
+    transform: translateY(-3px);
+}
+
+a {
+    color: #D4AF37;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: inline-block;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: #E6C36D;
+    transform: scale(1.1);
+}
+
+    </style>
+</head>
+<body>
+    <form action="/cart/" method="POST">
+        {% csrf_token %}
+        <a href="{% url 'viewcart' %}">Cart</a>
+        <div class="container">
+            <div class="product-view">
+                <div class="product-image">
+                    <img src="/media/{{ data.pimage }}" alt="{{ data.pname }}">
+                </div>
+                <div class="product-details">
+                    <h1 class="product-title">{{ data.pname }}</h1>
+                    <p class="product-price">Price: $<span id="unit-price">{{ data.price }}</span></p>
+                    <p>Total Price: $<span id="total-price">{{ data.price }}</span></p>
+                    <p class="product-description">{{ data.description }}</p>
+                    <div class="quantity-control">
+                        <button type="button" onclick="decreaseQuantity()">-</button>
+                        <input type="number" id="quantity" name="qty" value="1" min="1" onchange="updateTotalPrice()">
+                        <button type="button" onclick="increaseQuantity()">+</button>
+                    </div>
+                    <input type="hidden" name="total" id="hidden-total" value="{{ data.price }}">
+                    <button type="submit" class="btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        const unitPrice = parseFloat(document.getElementById("unit-price").innerText);
+    
+        function decreaseQuantity() {
+            const quantityInput = document.getElementById("quantity");
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+                updateTotalPrice();
+            }
+        }
+    
+        function increaseQuantity() {
+            const quantityInput = document.getElementById("quantity");
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+            updateTotalPrice();
+        }
+    
+        function updateTotalPrice() {
+            const quantity = parseInt(document.getElementById("quantity").value);
+            const totalPrice = unitPrice * quantity;
+            document.getElementById("total-price").innerText = totalPrice.toFixed(2);
+            document.getElementById("hidden-total").value = totalPrice.toFixed(2);
+        }
+    </script>
+    
+</body>
+</html>
