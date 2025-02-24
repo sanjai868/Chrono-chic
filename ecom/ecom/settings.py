@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-$(m##24yx6#ax^o!y-6k9+48^=b$$a36)t%hqrl())imuvgebs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['chronochic.onrender.com','127.0.1','localhost']
+ALLOWED_HOSTS = ['chrono-chic.onrender.com','127.0.1','localhost']
 
 
 # Application definition
